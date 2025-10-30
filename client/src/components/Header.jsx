@@ -25,6 +25,9 @@ const Header = () => {
              alt="" key={index} width={70} />
           ))}
         </div>
+        
+        <p className='mt-2 text-neutral-600'>Generated images from Pixor</p>
+
     </div>
     
   )

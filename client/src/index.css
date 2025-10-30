@@ -5,3 +5,7 @@
 *{
     font-family: Outfit;
 }
+body {
+  margin: 0;
+  background-color: #e5e7eb; /* same as bg-gray-200 */
+}
