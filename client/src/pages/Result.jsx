@@ -3,13 +3,18 @@ import { assets } from '../assets/assets'
 
 const Result = () => {
 
-  const [ image , setImage ] = useState(assets.sample_img_1)
-  const [ isImageLoaded , setIsImageLoaded ] = useState(false)
-  const [ loading , isLoading ] = useState(false)
+  const [image,setImage] = useState(assets.sample_img_1)
+  const [isImageLoaded,setIsImageLoaded] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const [input,setInput] = useState('')
+
+  const onSubmitHandler = async (e) =>{
+
+  }
 
   return (
 
-    <form className='flex flex-col min-h-[90vh] justify-center items-center '>
+    <form onSubmit={onSubmitHandler} className='flex flex-col min-h-[90vh] justify-center items-center '>
       <div>
         <div className='relative'>
           <img src={image} alt="" className='max-w-sm rounded' />
@@ -23,7 +28,9 @@ const Result = () => {
     {!isImageLoaded &&
       <div className='flex w-full max-w-xl bg-neutral-500 text-white text-sm p-.02 mt-10 rounded-full'>
 
-        <input type="text" placeholder='Describe what you want to generate' 
+        <input 
+        onChange={e => setInput(e.target.value)} value={input}
+        type="text" placeholder='Describe what you want to generate' 
         className='flex-1 bg-transparent outline-none ml-8 max-sm:w-20 placeholder-color'/>
 
         <button type='submit'
