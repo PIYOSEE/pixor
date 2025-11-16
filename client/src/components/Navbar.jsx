@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import {assets} from '../assets/assets'
 import {Link, useNavigate} from 'react-router-dom'
-import { AppContext } from '../context/appContext'
+import { AppContext } from '../context/AppContext'
 
 const Navbar = () => {
 
-  const {user} = useContext(AppContext)
+  const {user , setShowLogin} = useContext(AppContext)
   
   const navigate = useNavigate()
 
@@ -39,7 +39,8 @@ const Navbar = () => {
           <p onClick={()=> navigate('/buycredit')} 
             className='cursor-pointer'>Pricing
           </p>
-          <button className='text-white bg-zinc-900 px-6 py-2 sm:px-10 text-sm rounded-full'>Login</button>
+          <button onClick={()=>setShowLogin(true)}
+          className='text-white bg-zinc-900 px-6 py-2 sm:px-10 text-sm rounded-full cursor-pointer'>Login</button>
          </div>
         }
 
