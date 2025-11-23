@@ -18,6 +18,7 @@ import cross_icon from './cross_icon.svg'
 import star_group from './star_group.png'
 import credit_star from './credit_star.svg'
 import profile_icon from './profile_icon.png'
+import profile_img_3 from './profile_img_3.png'
 
 export const assets = {
     logo,
@@ -71,11 +72,11 @@ export const testimonialsData = [
         text:`I've been using bg.removal for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.`
     },
     {
-        image:profile_img_1,
-        name:'Donald Jackman',
-        role:' Graphic Designer',
+        image:profile_img_3,
+        name:'Maya Fernandes',
+        role:' UI/UX Designer',
         stars:5,
-        text:`I've been using bg.removal for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.`
+        text:`Amazing tool! I generated multiple AI images for my college project, and the results looked so realistic. The interface is smooth and easy to use. Highly recommended!`
     },
 ]
 
