@@ -8,9 +8,12 @@ import userRouter from './routes/userRoutes.js'
 const PORT = process.env.PORT || 4000
 const app = express()
 
-app.use('/api/user', userRouter)
+// MIDDLEWARES FIRST
 app.use(express.json())
 app.use(cors())
+
+// ROUTES AFTER MIDDLEWARE
+app.use('/api/user', userRouter)
 
 await connectDB()
 
