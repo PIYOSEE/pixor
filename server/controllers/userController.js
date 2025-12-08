@@ -61,16 +61,23 @@ const loginUser = async(req , res)=>{
     }
 }
 
-const userCredites = async (req,res)=>{
+const userCredites = async (req, res) => {
     try {
-        const {userID} = req.body
+        const userId = req.userId;  // coming from auth middleware
 
-        const user = await userModel.findById(userID)
-        res.json({success : true , credits : user.creditBalamnce , user : {name:user.name}})
+        const user = await userModel.findById(userId);
+
+        res.json({
+            success: true,
+            credits: user.creditBalance,
+            user: { name: user.name }
+        });
+
     } catch (error) {
-        console.log(error.message)
-        res.json({success : false , message : error.message})
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
     }
-}
+};
+
 
 export {registerUser,loginUser , userCredites}
