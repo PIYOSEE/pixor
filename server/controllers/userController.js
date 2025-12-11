@@ -8,7 +8,7 @@ const registerUser = async ( req , res )=> {
         const { name , email , password} = req.body
 
         if( !name || !email || !password){
-            return res.json({sucess : false , message : 'Missing details'})
+            return res.json({success : false , message : 'Missing details'})
         }
 
         const salt = await bcrypt.genSalt(10)
@@ -25,12 +25,12 @@ const registerUser = async ( req , res )=> {
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
 
-        res.json({sucess:true, token , user: {name:user.name}})
+        res.json({success:true, token , user: {name:user.name}})
 
     }
     catch (error){
         console.log(error)
-        res.json({sucess:false, message: error.message})
+        res.json({success:false, message: error.message})
     }
 }
 
@@ -40,7 +40,7 @@ const loginUser = async(req , res)=>{
         const user = await userModel.findOne({email})
 
         if(!user){
-            return res.json({sucess:false , message:'User does not exist'})
+            return res.json({success:false , message:'User does not exist'})
         }
 
         const isMatch = await bcrypt.compare(password , user.password)
@@ -49,15 +49,15 @@ const loginUser = async(req , res)=>{
         if(isMatch){
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET)
 
-            res.json({sucess:true, token , user: {name:user.name}})
+            res.json({success:true, token , user: {name:user.name}})
         }
         else{
-            return res.json({sucess:false , message:'Invalid credentials'})
+            return res.json({success:false , message:'Invalid credentials'})
         }
     }
     catch (error){
         console.log(error)
-        res.json({sucess:false, message: error.message})
+        res.json({success:false, message: error.message})
     }
 }
 

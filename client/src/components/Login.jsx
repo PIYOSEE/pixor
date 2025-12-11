@@ -24,15 +24,29 @@ const Login = () => {
                 if(data.success){
                     setToken(data.token)
                     setUser(data.user)
-                    localStorage.getItem('token',data.token)
+                    localStorage.setItem('token',data.token)
                     setShowLogin(false)
                 }
-            }else{
+                else{
                 toast.error(data.message)
-            }
-        } 
-        catch (error) {
+                }
+            } 
+            else{
+                const {data} = await axios.post(backendUrl + '/api/user/register', {name , email , password})
 
+                if(data.success){
+                    setToken(data.token)
+                    setUser(data.user)
+                    localStorage.setItem('token',data.token)
+                    setShowLogin(false)
+                }
+                else{
+                    toast.error(data.message)
+                    }                
+            } 
+        }
+        catch (error) {
+            toast.error(error.message)
         }
     }
 
@@ -54,7 +68,11 @@ const Login = () => {
         viewport={{once:true}}
         className='relative bg-white p-10  text-slate-600 rounded-xl'>
             <h1 className='text-center text-2xl text-purple-900 font-medium'>{state}</h1>
-            <p className='text-sm'>Welcome back! Please sign in to continue</p>
+            <p className='text-sm'>
+               {state === 'Login'
+               ? "Welcome back! Please sign in to continue"
+               : "Create your account to continue"}
+            </p>
 
         { state !== 'Login' &&
             <div className='border px-6 py-2 flex items-center gap-2 rounded-full mt-5'>
@@ -71,7 +89,7 @@ const Login = () => {
                 <input onChange={e =>setPassword(e.target.value)} value={password} type="password" className='outline-none text-sm' placeholder='Password' required />
             </div>
             <p className='text-sm text-blue-700 my-4 cursor-pointer'>Forgot password?</p>
-            <button className='bg-purple-600 w-full text-white py-2 rounded-full'>
+            <button className='bg-purple-600 w-full text-white py-2 rounded-full cursor-pointer'>
                 { state === 'Login'? 'Login' : 'Create account'}
             </button>
 
