@@ -6,7 +6,9 @@ import formData from 'form-data'
 export const generateImage = async (req , res)=> {
     try {
 
-        const { userId , prompt } = req.body
+        const userId = req.userId;   // coming from auth middleware
+        const { prompt } = req.body;
+
 
         const user = await userModel.findById(userId)  
         if(!user || !prompt){
@@ -16,12 +18,12 @@ export const generateImage = async (req , res)=> {
             return res.json({success:false , message:'No Credit Balance' ,creditBalance:user.creditBalance })
         } 
 
-        const formData = new formData()
-        formData.append('prompt' , prompt)
+        const dataFrom = new formData()
+        dataFrom.append('prompt' , prompt)
 
         const {data} = await axios.post(
             'https://clipdrop-api.co/text-to-image/v1' ,
-             formData ,
+             dataFrom ,
              {
                 headers: {'x-api-key': process.env.CLIPDROP_API,},
                 responseType : 'arraybuffer'
