@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import {assets} from '../assets/assets'
 import { AppContext } from '../context/AppContext'
 import { motion } from "motion/react"
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
     const [state,setState] = useState('Login')
-    const {setShowLogin} = useContext(AppContext)
+    const {setShowLogin , backendUrl , setToken , setUser} = useContext(AppContext)
 
     const [name , setName] = useState('')
     const [email , setEmail] = useState('')
@@ -17,7 +19,16 @@ const Login = () => {
 
         try{
             if( state === 'Login'){
-                await axios
+                const {data} = await axios.post(backendUrl + '/api/user/login', {email , password})
+
+                if(data.success){
+                    setToken(data.token)
+                    setUser(data.user)
+                    localStorage.getItem('token',data.token)
+                    setShowLogin(false)
+                }
+            }else{
+                toast.error(data.message)
             }
         } 
         catch (error) {
