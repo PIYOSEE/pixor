@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useState , useEffect } from "react";
 import { toast } from "react-toastify";
 
 
@@ -15,15 +15,31 @@ const AppContextProvider = (props)=>{
 
     const loadCreditsData = async ()=>{
         try {
-            const {data} = await axios.get(backendUrl + '/api/user/credits', )
+            const {data} = await axios.get(backendUrl + '/api/user/credits', {headers:{token}})
+
+            if(data.success){
+                setCredit(data.credits)
+                setUser(data.user)
+            }
         } catch (error) {
             console.log(error)
             toast.error(error.message)
         }
     }
 
+    const logout = ()=>{
+        localStorage.removeItem('token');
+        setToken('')
+        setUser(null)
+    }
+
+    useEffect(()=>{
+        loadCreditsData()
+    },[token])
+
     const value = {
-        user , setUser , showLogin , setShowLogin , backendUrl , token , setToken , credit , setCredit
+        user , setUser , showLogin , setShowLogin , backendUrl , token , setToken , credit , 
+        setCredit , loadCreditsData , logout
     }
     return (
         <AppContext.Provider value={value}>
