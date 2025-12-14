@@ -17,7 +17,13 @@ const Result = () => {
 
     if(input){
       const image = await generateImage(input)
+
+      if(image){
+        setIsImageLoaded(true)
+        setImage(image)
+      }
     }
+    setLoading(false)
   }
 
   return (
