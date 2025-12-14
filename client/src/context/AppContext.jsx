@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState , useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
@@ -12,6 +13,7 @@ const AppContextProvider = (props)=>{
     const [ credit , setCredit ] = useState(false)
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const navigate = useNavigate()
 
     const loadCreditsData = async ()=>{
         try {
@@ -39,7 +41,7 @@ const AppContextProvider = (props)=>{
                 toast.error(data.message)
                 loadCreditsData()
                 if(data.creditBalance === 0 ){
-                    
+                    navigate('/buy')
                 }
             }
 
@@ -60,7 +62,7 @@ const AppContextProvider = (props)=>{
 
     const value = {
         user , setUser , showLogin , setShowLogin , backendUrl , token , setToken , credit , 
-        setCredit , loadCreditsData , logout
+        setCredit , loadCreditsData , logout , generateImage
     }
     return (
         <AppContext.Provider value={value}>
