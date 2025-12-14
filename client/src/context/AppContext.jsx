@@ -27,6 +27,27 @@ const AppContextProvider = (props)=>{
         }
     }
 
+    const generateImage = async(prompt)=>{
+        try {
+            const {data} =  await axios.post(backendUrl + '/api.image/generate-image',
+            {prompt},{headers:{token}})
+
+            if (data.success){
+                loadCreditsData()
+                return data.resultImage
+            }else{
+                toast.error(data.message)
+                loadCreditsData()
+                if(data.creditBalance === 0 ){
+                    
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const logout = ()=>{
         localStorage.removeItem('token');
         setToken('')
