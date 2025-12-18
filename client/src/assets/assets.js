@@ -19,6 +19,10 @@ import star_group from './star_group.png'
 import credit_star from './credit_star.svg'
 import profile_icon from './profile_icon.png'
 import profile_img_3 from './profile_img_3.png'
+import sample_img_3 from './sample_img_3.png'
+import sample_img_4 from './sample_img_4.png'
+import sample_img_5 from './sample_img_5.png'
+import sample_img_6 from './sample_img_6.png'
 
 export const assets = {
     logo,
@@ -30,6 +34,10 @@ export const assets = {
     rating_star,
     sample_img_1,
     sample_img_2,
+    sample_img_3,
+    sample_img_4,
+    sample_img_5,
+    sample_img_6,
     email_icon,
     lock_icon,
     cross_icon,
