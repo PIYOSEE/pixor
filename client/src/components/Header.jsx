@@ -16,6 +16,16 @@ const Header = () => {
    }
   }
 
+  const sampleImages = [
+  assets.sample_img_1,
+  assets.sample_img_2,
+  assets.sample_img_3,
+  assets.sample_img_4,
+  assets.sample_img_5,
+  assets.sample_img_6,
+]
+
+
   return (
     <motion.div className='flex flex-col justify-center items-center text-center my-13'
     initial={{opacity:0.2 , y:100}}
@@ -58,18 +68,24 @@ const Header = () => {
           <img className='h-6' src={assets.star_group} alt="" />
         </motion.button>
 
-        <motion.div className='flex flex-wrap justify-center mt-16 gap-3 '
-        initial={{opacity:0}}
-        animate={{opacity:1}}
-        transition={{delay:1 , duration:1}}
-        >
-          {Array(6).fill('').map((item , index)=>(
-            <motion.img 
-            whileHover={{scale:1.05 , duration:0.1}}
-            className='rounded hover:scale-105 transition-all duration-300 cursor-pointer max-sm:w-10' src={index % 2 == 0 ? assets.sample_img_2 : assets.sample_img_1 }
-             alt="" key={index} width={70} />
-          ))}
-        </motion.div>
+        <motion.div
+  className='flex flex-wrap justify-center mt-16 gap-3'
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 1, duration: 1 }}
+>
+  {Array(6).fill('').map((_, index) => (
+    <motion.img
+      key={index}
+      src={sampleImages[index]}
+      alt=""
+      width={70}
+      className='rounded hover:scale-105 transition-all duration-300 cursor-pointer max-sm:w-10'
+      whileHover={{ scale: 1.05 }}
+    />
+  ))}
+</motion.div>
+
         
         <motion.p 
         initial={{opacity:0}}
