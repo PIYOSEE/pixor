@@ -118,6 +118,12 @@ const paymentRazorpay = async(res,req)=>{
                 break;
         }
 
+        date = Date.now();
+
+        const transactionData ={
+            userId , amount , plan , credits , date
+        }
+
     } catch (error) {
         console.log(error)
         res.json({success:false , message:error.message})
