@@ -94,6 +94,30 @@ const paymentRazorpay = async(res,req)=>{
         if(!userId  || !planId){
             return res.json({success:false , message:'Missing Details'})
         }
+        let credits, plan, amount, date
+
+        switch (planId) {
+            case 'Basic': 
+                  plan = 'Basic'
+                  credits = 50
+                  amount = 10
+                break;
+            case 'Advanced': 
+                  plan = 'Advanced'
+                  credits = 500
+                  amount = 50
+                break;
+            case 'Business': 
+                  plan = 'Business'
+                  credits = 5000
+                  amount = 250
+                break;
+        
+            default:
+                return res.jeson({success : false , message : 'Plan not found'});
+                break;
+        }
+
     } catch (error) {
         console.log(error)
         res.json({success:false , message:error.message})
