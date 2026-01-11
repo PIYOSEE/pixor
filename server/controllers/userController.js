@@ -2,6 +2,7 @@ import userModel from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import razorpay from 'razorpay'
+import transactionModel from '../models/transactionModel.js'
 
 
 const registerUser = async ( req , res )=> {
@@ -115,7 +116,6 @@ const paymentRazorpay = async(res,req)=>{
         
             default:
                 return res.jeson({success : false , message : 'Plan not found'});
-                break;
         }
 
         date = Date.now();
@@ -123,6 +123,8 @@ const paymentRazorpay = async(res,req)=>{
         const transactionData ={
             userId , amount , plan , credits , date
         }
+
+        const newTransaction = await transactionModel.create(transactionData)
 
     } catch (error) {
         console.log(error)
