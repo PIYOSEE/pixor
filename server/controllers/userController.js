@@ -87,64 +87,72 @@ const razorpayInstance = new razorpay({
     key_secret : process.env.RAZORPAY_KEY_SECRET,
 });
 
-const paymentRazorpay = async(res,req)=>{
-    try {
-        const { userId , planId } = req.body
-        const userData = await userModel.findById(userId)
+const paymentRazorpay = async (req, res) => {
+  try {
+    const userId = req.userId; // from auth middleware
+    const { planId } = req.body;
 
-        if(!userId  || !planId){
-            return res.json({success:false , message:'Missing Details'})
-        }
-        let credits, plan, amount, date
-
-        switch (planId) {
-            case 'Basic': 
-                  plan = 'Basic'
-                  credits = 50
-                  amount = 10
-                break;
-            case 'Advanced': 
-                  plan = 'Advanced'
-                  credits = 500
-                  amount = 50
-                break;
-            case 'Business': 
-                  plan = 'Business'
-                  credits = 5000
-                  amount = 250
-                break;
-        
-            default:
-                return res.jeson({success : false , message : 'Plan not found'});
-        }
-
-        date = Date.now();
-
-        const transactionData ={
-            userId , amount , plan , credits , date
-        }
-
-        const newTransaction = await transactionModel.create(transactionData)
-
-        const options = {
-            amount : amount * 100,
-            currency : process.env.CURRENCY,
-            receipt : newTransaction._id,
-        }
-
-        await razorpayInstance.orders.create(options , (error , order)=>{
-            if (error) {
-                console.log(error);
-                return res.json({success : false , message : error})
-            } 
-            res.json({success:false , order})
-        })
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false , message:error.message})
+    if (!userId || !planId) {
+      return res.json({ success: false, message: "Missing details" });
     }
-}
+
+    let credits, plan, amount;
+
+    switch (planId) {
+      case "Basic":
+        plan = "Basic";
+        credits = 100;
+        amount = 10;
+        break;
+
+      case "Advanced":
+        plan = "Advanced";
+        credits = 500;
+        amount = 50;
+        break;
+
+      case "Business":
+        plan = "Business";
+        credits = 5000;
+        amount = 250;
+        break;
+
+      default:
+        return res.json({ success: false, message: "Plan not found" });
+    }
+
+    const transactionData = {
+      userId,
+      plan,
+      amount,
+      credits,
+      payment: false,
+      date: Date.now(),
+    };
+
+    const newTransaction = await transactionModel.create(transactionData);
+
+    const options = {
+      amount: amount * 100, // paise
+      currency: "INR",
+      receipt: newTransaction._id.toString(),
+    };
+
+    razorpayInstance.orders.create(options, (error, order) => {
+      if (error) {
+        console.log("Razorpay Error:", error);
+        return res.json({ success: false, message: "Order creation failed" });
+      }
+
+      res.json({ success: true, order });
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 
 
 export {registerUser,loginUser , userCredites , paymentRazorpay}
