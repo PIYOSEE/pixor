@@ -20,3 +20,5 @@ Pixor is a full-stack MERN **Text-to-Image Generator** web application that allo
 
 ### Clone the repository
 ```bash
+git clone https://github.com/PIYOSEE/pixor.git
+
